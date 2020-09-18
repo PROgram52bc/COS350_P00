@@ -83,7 +83,11 @@ Color colorOver(
     Color below,    // below color.  can assume below.alpha==1, but extra credit for
                     // correctly handling the case when below.alpha < 1
 ) {
-	return Color.lerp(below, above, above.alpha);
+	var alpha = above.alpha + (1-above.alpha) * below.alpha;
+	var color = above * above.alpha + below * (1-above.alpha) * below.alpha;
+	color = alpha != 0 ? color/alpha : Color(1,1,1);
+	color.alpha = alpha;
+	return color;
 }
 
 // Return result of "blend" composite operation, of `above` blended into `below` by `factor`.
